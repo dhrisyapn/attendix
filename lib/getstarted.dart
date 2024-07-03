@@ -13,9 +13,6 @@ class _GetStartedPageState extends State<GetStartedPage> {
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
-        children: const <Widget>[
-          Text('Get Started Page'),
-        ],
       ),
     );
   }
