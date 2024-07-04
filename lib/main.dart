@@ -1,3 +1,4 @@
+import 'package:attendix/forgot.dart';
 import 'package:attendix/getstarted.dart';
 import 'package:flutter/material.dart';
 
@@ -18,6 +19,6 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Color(0xFFFFFFFF),
           useMaterial3: true,
         ),
-        home: GetStartedPage());
+        home: ForgotPage());
   }
 }
