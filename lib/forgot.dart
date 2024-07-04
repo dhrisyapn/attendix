@@ -21,6 +21,10 @@ class _ForgotPageState extends State<ForgotPage> {
               width: 150,
             ),
           ),
+          Image.asset(
+            'assets/Group 59.png',
+            width: double.infinity,
+          ),
         ],
       ),
     );
