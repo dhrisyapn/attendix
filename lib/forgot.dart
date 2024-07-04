@@ -25,6 +25,28 @@ class _ForgotPageState extends State<ForgotPage> {
             'assets/Group 59.png',
             width: double.infinity,
           ),
+          Text(
+            'Lost your password?',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 15,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+          SizedBox(
+            height: 10,
+          ),
+          Text(
+            'Enter email to get reset link',
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 11,
+              fontFamily: 'Montserrat',
+              fontWeight: FontWeight.w400,
+              height: 0.10,
+            ),
+          ),
         ],
       ),
     );
