@@ -13,6 +13,15 @@ class _GetStartedPageState extends State<GetStartedPage> {
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Center(
+            child: Image.asset(
+              'assets/logo.png',
+              height: 25,
+              width: 145,
+            ),
+          ),
+        ],
       ),
     );
   }
