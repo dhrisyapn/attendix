@@ -26,7 +26,7 @@ class _ForgotPageState extends State<ForgotPage> {
             width: double.infinity,
           ),
           SizedBox(
-            height: MediaQuery.of(context).size.height * 0.08,
+            height: MediaQuery.of(context).size.height * 0.09,
           ),
           Text(
             'Lost your password?',
