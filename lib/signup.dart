@@ -23,7 +23,7 @@ class _SignUpPageState extends State<SignUpPage> {
                   // width: 150,
                 ),
               ),
-              Image.asset('assets/signup.png'),
+              Image.asset('assets/sign up.png'),
               Text(
                 'Sign up',
                 textAlign: TextAlign.center,
