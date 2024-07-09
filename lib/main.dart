@@ -1,5 +1,6 @@
 import 'package:attendix/forgot.dart';
 import 'package:attendix/getstarted.dart';
+import 'package:attendix/signup.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -19,6 +20,6 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Color(0xFFFFFFFF),
           useMaterial3: true,
         ),
-        home: ForgotPage());
+        home: SignUpPage());
   }
 }
