@@ -8,6 +8,19 @@ class LoginPage extends StatefulWidget {
 }
 
 class _LoginPageState extends State<LoginPage> {
+  bool visible = false;
+  var eyeicon = const Icon(Icons.visibility_off);
+  void toggleicon() {
+    setState(() {
+      visible = !visible;
+      if (!visible) {
+        eyeicon = const Icon(Icons.visibility);
+      } else {
+        eyeicon = const Icon(Icons.visibility_off);
+      }
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -59,6 +72,11 @@ class _LoginPageState extends State<LoginPage> {
                 padding: const EdgeInsets.only(left: 30, right: 30),
                 child: TextField(
                   decoration: InputDecoration(
+                    suffixIcon: IconButton(
+                      onPressed: toggleicon,
+                      icon: eyeicon,
+                      color: Color(0xFF2c86c8),
+                    ),
                     hintText: 'Password',
                     hintStyle: TextStyle(
                         color: Color(0xFF7A7F86),
@@ -78,6 +96,7 @@ class _LoginPageState extends State<LoginPage> {
                     fontSize: 17,
                   ),
                   cursorColor: Colors.blue,
+                  obscureText: visible,
                 ),
               ),
               //sized box 5
