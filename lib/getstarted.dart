@@ -1,3 +1,4 @@
+import 'package:attendix/role.dart';
 import 'package:flutter/material.dart';
 
 class GetStartedPage extends StatefulWidget {
@@ -45,24 +46,30 @@ class _GetStartedPageState extends State<GetStartedPage> {
           ),
           Padding(
             padding: const EdgeInsets.only(left: 30, right: 30),
-            child: Container(
-              width: double.infinity,
-              height: 43,
-              decoration: ShapeDecoration(
-                color: Color(0xFF2C86C8),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(5),
+            child: GestureDetector(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => SelectRolePage()));
+              },
+              child: Container(
+                width: double.infinity,
+                height: 43,
+                decoration: ShapeDecoration(
+                  color: Color(0xFF2C86C8),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(5),
+                  ),
                 ),
-              ),
-              child: Center(
-                child: Text(
-                  'Get Started',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 20,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w600,
+                child: Center(
+                  child: Text(
+                    'Get Started',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 20,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),
