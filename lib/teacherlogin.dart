@@ -1,4 +1,6 @@
 import 'package:attendix/forgot.dart';
+import 'package:attendix/teacherhome.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class TeacherLoginPage extends StatefulWidget {
@@ -20,6 +22,36 @@ class _TeacherLoginPageState extends State<TeacherLoginPage> {
         eyeicon = const Icon(Icons.visibility_off);
       }
     });
+  }
+
+  TextEditingController emailcontroller = TextEditingController();
+  TextEditingController passwordcontroller = TextEditingController();
+  // Firebase Auth instance
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+
+  // Sign in function
+  Future<void> signInWithEmailPassword() async {
+    try {
+      final UserCredential userCredential =
+          await _auth.signInWithEmailAndPassword(
+        email: emailcontroller.text.trim(),
+        password: passwordcontroller.text.trim(),
+      );
+
+      // Check if sign in was successful
+      if (userCredential.user != null) {
+        // Navigate to your target page if login is successful
+        Navigator.push(context,
+            MaterialPageRoute(builder: (context) => TeacherHomePage()));
+      }
+    } on FirebaseAuthException catch (e) {
+      // Handle errors
+      if (e.code == 'user-not-found') {
+        print('No user found for that email.');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user.');
+      }
+    }
   }
 
   @override
@@ -54,6 +86,7 @@ class _TeacherLoginPageState extends State<TeacherLoginPage> {
               Padding(
                 padding: const EdgeInsets.only(left: 30, right: 30),
                 child: TextField(
+                  controller: emailcontroller,
                   decoration: InputDecoration(
                     hintText: 'Email',
                     hintStyle: TextStyle(
@@ -82,6 +115,7 @@ class _TeacherLoginPageState extends State<TeacherLoginPage> {
               Padding(
                 padding: const EdgeInsets.only(left: 30, right: 30),
                 child: TextField(
+                  controller: passwordcontroller,
                   decoration: InputDecoration(
                     suffixIcon: IconButton(
                       onPressed: toggleicon,
@@ -145,24 +179,29 @@ class _TeacherLoginPageState extends State<TeacherLoginPage> {
               ),
               Padding(
                 padding: const EdgeInsets.only(left: 30, right: 30),
-                child: Container(
-                  width: double.infinity,
-                  height: 45,
-                  decoration: ShapeDecoration(
-                    color: Color(0xFF2C86C8),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8),
+                child: GestureDetector(
+                  onTap: () {
+                    signInWithEmailPassword();
+                  },
+                  child: Container(
+                    width: double.infinity,
+                    height: 45,
+                    decoration: ShapeDecoration(
+                      color: Color(0xFF2C86C8),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8),
+                      ),
                     ),
-                  ),
-                  child: Center(
-                    child: Text(
-                      'Login',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 25,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w600,
+                    child: Center(
+                      child: Text(
+                        'Login',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.white,
+                          fontSize: 25,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
                     ),
                   ),
