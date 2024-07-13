@@ -134,7 +134,6 @@ class _LoginPageState extends State<LoginPage> {
                           fontSize: 10,
                           fontFamily: 'Poppins',
                           fontWeight: FontWeight.w300,
-                          height: 0,
                         ),
                       ),
                     ),
