@@ -1,3 +1,4 @@
+import 'package:attendix/login.dart';
 import 'package:flutter/material.dart';
 
 class SelectRolePage extends StatefulWidget {
@@ -41,23 +42,29 @@ class _SelectRolePageState extends State<SelectRolePage> {
             SizedBox(
               height: 15,
             ),
-            Container(
-              width: 282,
-              height: 31,
-              decoration: ShapeDecoration(
-                color: Color(0xFF2C86C8),
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(5)),
-              ),
-              child: Center(
-                child: Text(
-                  'Super Admin',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 15,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w600,
+            GestureDetector(
+              onTap: () {
+                Navigator.push(context,
+                    MaterialPageRoute(builder: (context) => LoginPage()));
+              },
+              child: Container(
+                width: 282,
+                height: 31,
+                decoration: ShapeDecoration(
+                  color: Color(0xFF2C86C8),
+                  shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(5)),
+                ),
+                child: Center(
+                  child: Text(
+                    'Super Admin',
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 15,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                 ),
               ),

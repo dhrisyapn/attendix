@@ -48,7 +48,7 @@ class _GetStartedPageState extends State<GetStartedPage> {
             padding: const EdgeInsets.only(left: 30, right: 30),
             child: GestureDetector(
               onTap: () {
-                Navigator.push(context,
+                Navigator.pushReplacement(context,
                     MaterialPageRoute(builder: (context) => SelectRolePage()));
               },
               child: Container(

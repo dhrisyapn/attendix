@@ -40,6 +40,16 @@ class _LoginPageState extends State<LoginPage> {
                 ),
               ),
               Image.asset('assets/login.png'),
+              Text(
+                'Login as Admin',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Color(0xFF042C38),
+                  fontSize: 20,
+                  fontFamily: 'Poppins',
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
               Padding(
                 padding: const EdgeInsets.only(left: 30, right: 30),
                 child: TextField(

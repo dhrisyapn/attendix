@@ -30,6 +30,6 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Color(0xFFFFFFFF),
           useMaterial3: true,
         ),
-        home: StudentLoginPage());
+        home: GetStartedPage());
   }
 }
