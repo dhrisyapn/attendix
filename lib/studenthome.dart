@@ -1,3 +1,5 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -71,6 +73,26 @@ class _StudentHomePageState extends State<StudentHomePage> {
         ),
       ),
     );
+  }
+
+  // get current user email
+  final email = FirebaseAuth.instance.currentUser!.email;
+  void fetchTimetable() async {
+    // Fetch all documents within the specified collection path
+    var collection = FirebaseFirestore.instance
+        .collection('classes')
+        .doc('10A')
+        .collection('timetable')
+        .doc('monday')
+        .collection('subjects');
+
+    var querySnapshot = await collection.get();
+
+    for (var doc in querySnapshot.docs) {
+      // Assuming timetable() is a function that you have defined
+      // that takes a document snapshot or some relevant data from it.
+      // Call timetable() for each document
+    }
   }
 
   @override
