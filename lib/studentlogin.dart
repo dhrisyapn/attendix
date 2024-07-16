@@ -74,7 +74,7 @@ class _StudentLoginPageState extends State<StudentLoginPage> {
               ),
               Image.asset('assets/login.png'),
               Text(
-                'Login as Teacher',
+                'Login as Student',
                 textAlign: TextAlign.center,
                 style: TextStyle(
                   color: Color(0xFF042C38),

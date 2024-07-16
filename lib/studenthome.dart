@@ -3,6 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
 class StudentHomePage extends StatefulWidget {
   const StudentHomePage({super.key});
@@ -12,7 +13,7 @@ class StudentHomePage extends StatefulWidget {
 }
 
 class _StudentHomePageState extends State<StudentHomePage> {
-  Widget timetable() {
+  Widget timetable(String subject, String start, String end) {
     return Padding(
       padding: const EdgeInsets.only(left: 30, right: 30),
       child: Padding(
@@ -32,7 +33,7 @@ class _StudentHomePageState extends State<StudentHomePage> {
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
-                  'Subject 1',
+                  subject,
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.black,
@@ -41,31 +42,33 @@ class _StudentHomePageState extends State<StudentHomePage> {
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-                SizedBox(
-                  width: 50,
-                ),
-                Text(
-                  '9.00-10.00',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 13,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-                SizedBox(
-                  width: 50,
-                ),
-                Text(
-                  'Present',
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Color(0xFF1C591B),
-                    fontSize: 13,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w600,
-                  ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      '9.00-10.00',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontSize: 13,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    SizedBox(
+                      width: 80,
+                    ),
+                    Text(
+                      'Present',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Color(0xFF1C591B),
+                        fontSize: 13,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ],
                 )
               ],
             ),
@@ -77,22 +80,24 @@ class _StudentHomePageState extends State<StudentHomePage> {
 
   // get current user email
   final email = FirebaseAuth.instance.currentUser!.email;
-  void fetchTimetable() async {
-    // Fetch all documents within the specified collection path
+  Future<List<DocumentSnapshot>>? timetableDocuments;
+
+  @override
+  void initState() {
+    super.initState();
+    timetableDocuments = fetchTimetable();
+  }
+
+  Future<List<DocumentSnapshot>> fetchTimetable() async {
     var collection = FirebaseFirestore.instance
         .collection('classes')
         .doc('10A')
         .collection('timetable')
-        .doc('monday')
-        .collection('subjects');
+        .doc('Monday')
+        .collection('Subjects');
 
     var querySnapshot = await collection.get();
-
-    for (var doc in querySnapshot.docs) {
-      // Assuming timetable() is a function that you have defined
-      // that takes a document snapshot or some relevant data from it.
-      // Call timetable() for each document
-    }
+    return querySnapshot.docs;
   }
 
   @override
@@ -140,12 +145,42 @@ class _StudentHomePageState extends State<StudentHomePage> {
               ),
             ),
           ),
-          timetable(),
-          timetable(),
-          timetable(),
-          timetable(),
-          timetable(),
-          timetable(),
+          FutureBuilder<QuerySnapshot>(
+            future: FirebaseFirestore.instance
+                .collection('classes')
+                .doc('10A')
+                .collection('timetable')
+                .doc('Monday')
+                .collection('Subjects')
+                .get(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text(snapshot.error.toString()));
+              } else if (snapshot.hasData) {
+                // Create a list of timetable widgets from the snapshot documents
+                List<Widget> timetableWidgets = snapshot.data!.docs.map((doc) {
+                  return timetable(
+                    doc['subject'],
+                    DateFormat('HH:mm').format(doc['start']
+                        .toDate()), // Assuming 'start' is a Timestamp
+                    DateFormat('HH:mm').format(
+                        doc['end'].toDate()), // Assuming 'end' is a Timestamp
+                  );
+                }).toList();
+
+                // Display the timetable widgets inside a Column
+                return SingleChildScrollView(
+                  child: Column(
+                    children: timetableWidgets,
+                  ),
+                );
+              } else {
+                return Center(child: Text('No data available'));
+              }
+            },
+          ),
         ],
       ),
     );
