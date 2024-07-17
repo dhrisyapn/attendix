@@ -224,7 +224,7 @@ class _AddStudentPageState extends State<AddStudentPage> {
               ),
               child: Center(
                 child: Text(
-                  'Submit',
+                  'ADD',
                   textAlign: TextAlign.center,
                   style: TextStyle(
                     color: Colors.white,
