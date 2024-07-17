@@ -46,7 +46,7 @@ class _StudentHomePageState extends State<StudentHomePage> {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     Text(
-                      '9.00-10.00',
+                      '$start-$end',
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.black,
@@ -56,7 +56,7 @@ class _StudentHomePageState extends State<StudentHomePage> {
                       ),
                     ),
                     SizedBox(
-                      width: 80,
+                      width: MediaQuery.of(context).size.width * 0.2,
                     ),
                     Text(
                       'Present',
