@@ -5,7 +5,6 @@ import 'package:attendix/login.dart';
 import 'package:attendix/role.dart';
 import 'package:attendix/signup.dart';
 import 'package:attendix/studentlogin.dart';
-import 'package:attendix/teacherhome.dart';
 import 'package:attendix/teacherlogin.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -31,6 +30,6 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Color(0xFFFFFFFF),
           useMaterial3: true,
         ),
-        home: TeacherHomePage());
+        home: GetStartedPage());
   }
 }

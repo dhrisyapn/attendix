@@ -83,23 +83,6 @@ class _StudentHomePageState extends State<StudentHomePage> {
   Future<List<DocumentSnapshot>>? timetableDocuments;
 
   @override
-  void initState() {
-    super.initState();
-    timetableDocuments = fetchTimetable();
-  }
-
-  Future<List<DocumentSnapshot>> fetchTimetable() async {
-    var collection = FirebaseFirestore.instance
-        .collection('classes')
-        .doc('10A')
-        .collection('timetable')
-        .doc('Monday')
-        .collection('Subjects');
-
-    var querySnapshot = await collection.get();
-    return querySnapshot.docs;
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(

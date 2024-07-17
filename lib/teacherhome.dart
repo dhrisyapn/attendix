@@ -1,6 +1,8 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:intl/intl.dart';
 
 class TeacherHomePage extends StatefulWidget {
   const TeacherHomePage({super.key});
@@ -119,6 +121,42 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                 fontWeight: FontWeight.w600,
               ),
             ),
+          ),
+          FutureBuilder<QuerySnapshot>(
+            future: FirebaseFirestore.instance
+                .collection('classes')
+                .doc('10A')
+                .collection('timetable')
+                .doc('Monday')
+                .collection('Subjects')
+                .get(),
+            builder: (context, snapshot) {
+              if (snapshot.connectionState == ConnectionState.waiting) {
+                return Center(child: CircularProgressIndicator());
+              } else if (snapshot.hasError) {
+                return Center(child: Text(snapshot.error.toString()));
+              } else if (snapshot.hasData) {
+                // Create a list of timetable widgets from the snapshot documents
+                List<Widget> timetableWidgets = snapshot.data!.docs.map((doc) {
+                  return timetable(
+                    doc['subject'],
+                    DateFormat('HH:mm').format(doc['start']
+                        .toDate()), // Assuming 'start' is a Timestamp
+                    DateFormat('HH:mm').format(
+                        doc['end'].toDate()), // Assuming 'end' is a Timestamp
+                  );
+                }).toList();
+
+                // Display the timetable widgets inside a Column
+                return SingleChildScrollView(
+                  child: Column(
+                    children: timetableWidgets,
+                  ),
+                );
+              } else {
+                return Center(child: Text('No data available'));
+              }
+            },
           ),
         ],
       ),
