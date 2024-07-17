@@ -12,9 +12,28 @@ class _AddStudentPageState extends State<AddStudentPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        backgroundColor: Colors.transparent,
+        title: Center(
+          child: Image.asset(
+            'assets/logo.png',
+            height: 30,
+          ),
+        ),
+      ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
         children: [
+          Text(
+            'Add Student',
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: Colors.black,
+              fontSize: 20,
+              fontFamily: 'Poppins',
+              fontWeight: FontWeight.w600,
+            ),
+          ),
           Padding(
             padding: const EdgeInsets.only(left: 30, right: 30),
             child: TextField(

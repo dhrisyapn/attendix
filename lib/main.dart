@@ -1,3 +1,4 @@
+import 'package:attendix/addstudent.dart';
 import 'package:attendix/firebase_options.dart';
 import 'package:attendix/forgot.dart';
 import 'package:attendix/getstarted.dart';
@@ -30,6 +31,6 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Color(0xFFFFFFFF),
           useMaterial3: true,
         ),
-        home: GetStartedPage());
+        home: AddStudentPage());
   }
 }
