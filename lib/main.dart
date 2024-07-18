@@ -31,6 +31,6 @@ class MyApp extends StatelessWidget {
           scaffoldBackgroundColor: Color(0xFFFFFFFF),
           useMaterial3: true,
         ),
-        home: AddStudentPage());
+        home: GetStartedPage());
   }
 }

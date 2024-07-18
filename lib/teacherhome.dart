@@ -1,7 +1,8 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:flutter/foundation.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+
 import 'package:intl/intl.dart';
 
 class TeacherHomePage extends StatefulWidget {
@@ -12,7 +13,7 @@ class TeacherHomePage extends StatefulWidget {
 }
 
 class _TeacherHomePageState extends State<TeacherHomePage> {
-  Widget timetable(String subject, String start, String end) {
+  Widget timetable(String subject, String start, String end, String classname) {
     return Padding(
       padding: const EdgeInsets.only(left: 30, right: 30),
       child: Padding(
@@ -58,7 +59,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                       width: MediaQuery.of(context).size.width * 0.2,
                     ),
                     Text(
-                      'Present',
+                      classname,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Color(0xFF1C591B),
@@ -77,8 +78,12 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
     );
   }
 
+  // get current user email
+  final email = FirebaseAuth.instance.currentUser!.email;
+
   @override
   Widget build(BuildContext context) {
+    print(email);
     return Scaffold(
       appBar: AppBar(
         backgroundColor: Colors.transparent,
@@ -99,7 +104,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
           Padding(
             padding: const EdgeInsets.only(left: 30),
             child: Text(
-              'Welcome Student,',
+              'Welcome Teacher,',
               style: TextStyle(
                 color: Colors.black,
                 fontSize: 24,
@@ -122,41 +127,36 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
               ),
             ),
           ),
-          FutureBuilder<QuerySnapshot>(
-            future: FirebaseFirestore.instance
-                .collection('classes')
-                .doc('10A')
-                .collection('timetable')
-                .doc('Monday')
-                .collection('Subjects')
-                .get(),
-            builder: (context, snapshot) {
-              if (snapshot.connectionState == ConnectionState.waiting) {
-                return Center(child: CircularProgressIndicator());
-              } else if (snapshot.hasError) {
-                return Center(child: Text(snapshot.error.toString()));
-              } else if (snapshot.hasData) {
-                // Create a list of timetable widgets from the snapshot documents
-                List<Widget> timetableWidgets = snapshot.data!.docs.map((doc) {
-                  return timetable(
-                    doc['subject'],
-                    DateFormat('HH:mm').format(doc['start']
-                        .toDate()), // Assuming 'start' is a Timestamp
-                    DateFormat('HH:mm').format(
-                        doc['end'].toDate()), // Assuming 'end' is a Timestamp
-                  );
-                }).toList();
-
-                // Display the timetable widgets inside a Column
-                return SingleChildScrollView(
-                  child: Column(
-                    children: timetableWidgets,
-                  ),
+          Expanded(
+            child: StreamBuilder<QuerySnapshot>(
+              stream: FirebaseFirestore.instance
+                  .collection('userdata')
+                  .doc(email)
+                  .collection('timetable')
+                  .doc('Monday')
+                  .collection('subjects')
+                  .snapshots(),
+              builder: (context, snapshot) {
+                if (snapshot.hasError) {
+                  return Text('Error: ${snapshot.error}');
+                }
+                if (!snapshot.hasData) {
+                  return Text('Loading...');
+                }
+                final documents = snapshot.data!.docs;
+                return ListView.builder(
+                  itemCount: documents.length,
+                  itemBuilder: (context, index) {
+                    final doc = documents[index];
+                    return timetable(
+                        doc['subject'],
+                        DateFormat('HH:mm').format(doc['start'].toDate()),
+                        DateFormat('HH:mm').format(doc['end'].toDate()),
+                        doc['cls']);
+                  },
                 );
-              } else {
-                return Center(child: Text('No data available'));
-              }
-            },
+              },
+            ),
           ),
         ],
       ),
