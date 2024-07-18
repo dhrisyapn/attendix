@@ -1,3 +1,4 @@
+import 'package:attendix/markattendance.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 
@@ -13,64 +14,76 @@ class TeacherHomePage extends StatefulWidget {
 }
 
 class _TeacherHomePageState extends State<TeacherHomePage> {
-  Widget timetable(String subject, String start, String end, String classname) {
+  Widget timetable(String subject, String start, String end, String classname,
+      String docid) {
     return Padding(
       padding: const EdgeInsets.only(left: 30, right: 30),
       child: Padding(
         padding: const EdgeInsets.only(bottom: 10),
-        child: Container(
-          width: double.infinity,
-          height: 40,
-          decoration: ShapeDecoration(
-            shape: RoundedRectangleBorder(
-              side: BorderSide(width: 1.50, color: Color(0xFF2C86C8)),
-              borderRadius: BorderRadius.circular(5),
+        child: GestureDetector(
+          onTap: () {
+            Navigator.push(
+                context,
+                MaterialPageRoute(
+                    builder: (context) => MarkAttendancePage(
+                          docid: docid,
+                          classname: classname,
+                        )));
+          },
+          child: Container(
+            width: double.infinity,
+            height: 40,
+            decoration: ShapeDecoration(
+              shape: RoundedRectangleBorder(
+                side: BorderSide(width: 1.50, color: Color(0xFF2C86C8)),
+                borderRadius: BorderRadius.circular(5),
+              ),
             ),
-          ),
-          child: Padding(
-            padding: const EdgeInsets.only(left: 10, right: 10),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  subject,
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 13,
-                    fontFamily: 'Poppins',
-                    fontWeight: FontWeight.w600,
+            child: Padding(
+              padding: const EdgeInsets.only(left: 10, right: 10),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    subject,
+                    textAlign: TextAlign.center,
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 13,
+                      fontFamily: 'Poppins',
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.end,
-                  children: [
-                    Text(
-                      '$start-$end',
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.black,
-                        fontSize: 13,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w600,
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      Text(
+                        '$start-$end',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 13,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600,
+                        ),
                       ),
-                    ),
-                    SizedBox(
-                      width: MediaQuery.of(context).size.width * 0.2,
-                    ),
-                    Text(
-                      classname,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Color(0xFF1C591B),
-                        fontSize: 13,
-                        fontFamily: 'Poppins',
-                        fontWeight: FontWeight.w600,
+                      SizedBox(
+                        width: MediaQuery.of(context).size.width * 0.2,
                       ),
-                    ),
-                  ],
-                )
-              ],
+                      Text(
+                        classname,
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Color(0xFF1C591B),
+                          fontSize: 13,
+                          fontFamily: 'Poppins',
+                          fontWeight: FontWeight.w600,
+                        ),
+                      ),
+                    ],
+                  )
+                ],
+              ),
             ),
           ),
         ),
@@ -149,10 +162,12 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                   itemBuilder: (context, index) {
                     final doc = documents[index];
                     return timetable(
-                        doc['subject'],
-                        DateFormat('HH:mm').format(doc['start'].toDate()),
-                        DateFormat('HH:mm').format(doc['end'].toDate()),
-                        doc['cls']);
+                      doc['subject'],
+                      DateFormat('HH:mm').format(doc['start'].toDate()),
+                      DateFormat('HH:mm').format(doc['end'].toDate()),
+                      doc['cls'],
+                      doc.id,
+                    );
                   },
                 );
               },
