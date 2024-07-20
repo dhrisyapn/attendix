@@ -13,14 +13,17 @@ class MarkAttendancePage extends StatefulWidget {
 
 class _MarkAttendancePageState extends State<MarkAttendancePage> {
   bool isChecked = true;
-  Widget attendance() {
+  List ispresent = [];
+  Widget attendance(String name, String rollno, int index) {
     return Container(
+      height: 40,
+      width: double.infinity,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            '1',
+            rollno,
             style: TextStyle(
               color: Colors.black,
               fontSize: 15,
@@ -30,7 +33,7 @@ class _MarkAttendancePageState extends State<MarkAttendancePage> {
             ),
           ),
           Text(
-            'AA',
+            name,
             textAlign: TextAlign.center,
             style: TextStyle(
               color: Colors.black,
@@ -40,11 +43,11 @@ class _MarkAttendancePageState extends State<MarkAttendancePage> {
             ),
           ),
           Checkbox(
-            value: isChecked,
+            value: ispresent[index][1],
             onChanged: (bool? value) {
               // Toggle the state
               setState(() {
-                isChecked = value!;
+                ispresent[index][1] = value!;
               });
             },
             activeColor: Color.fromARGB(
@@ -88,7 +91,7 @@ class _MarkAttendancePageState extends State<MarkAttendancePage> {
               ),
               child: Container(
                 width: double.infinity,
-                // height: 616,
+                height: 616,
                 decoration: ShapeDecoration(
                   shape: RoundedRectangleBorder(
                     side: BorderSide(width: 1.50, color: Color(0xFF2C86C8)),
@@ -135,45 +138,41 @@ class _MarkAttendancePageState extends State<MarkAttendancePage> {
                           ),
                         ],
                       ),
-                      attendance(),
-                      attendance(),
-                      attendance(),
+
+                      // attendance(),
+                      // attendance(),
+                      // attendance(),
+                      Expanded(
+                        child: StreamBuilder<QuerySnapshot>(
+                          stream: FirebaseFirestore.instance
+                              .collection('students')
+                              .doc(widget.classname)
+                              .collection('studentdata')
+                              .snapshots(),
+                          builder: (context, snapshot) {
+                            if (snapshot.hasError) {
+                              return Text('Error: ${snapshot.error}');
+                            }
+                            if (!snapshot.hasData) {
+                              return Text('Loading...');
+                            }
+                            final documents = snapshot.data!.docs;
+                            return ListView.builder(
+                              itemCount: documents.length,
+                              itemBuilder: (context, index) {
+                                final doc = documents[index];
+                                List data = [doc['rollno'], true];
+                                ispresent.add(data);
+                                return attendance(
+                                    doc['name'], doc['rollno'], index);
+                              },
+                            );
+                          },
+                        ),
+                      ),
                     ],
                   ),
                 ),
-              ),
-            ),
-            Text(widget.docid),
-            Text(widget.classname),
-            Expanded(
-              child: FutureBuilder<QuerySnapshot>(
-                future: FirebaseFirestore.instance
-                    .collection('students')
-                    .doc(widget.classname)
-                    .collection('studentdata')
-                    .get(),
-                builder: (context, snapshot) {
-                  if (snapshot.connectionState == ConnectionState.waiting) {
-                    return Center(child: CircularProgressIndicator());
-                  }
-                  if (snapshot.hasError) {
-                    return Text("Error: ${snapshot.error}");
-                  }
-                  if (!snapshot.hasData) {
-                    return Text("No data");
-                  }
-                  return ListView(
-                    children:
-                        snapshot.data!.docs.map((DocumentSnapshot document) {
-                      Map<String, dynamic> data =
-                          document.data()! as Map<String, dynamic>;
-                      return ListTile(
-                        title: Text(data['name']),
-                        subtitle: Text('Class Name: ${document.id}'),
-                      );
-                    }).toList(),
-                  );
-                },
               ),
             ),
           ],
