@@ -58,6 +58,17 @@ class _MarkAttendancePageState extends State<MarkAttendancePage> {
     );
   }
 
+  void markAttendance() {
+    for (int i = 0; i < ispresent.length; i++) {
+      FirebaseFirestore.instance
+          .collection('students')
+          .doc(widget.classname)
+          .collection('studentdata')
+          .doc(ispresent[i][0])
+          .update({'attendance': ispresent[i][1]});
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
