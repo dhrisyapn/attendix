@@ -13,61 +13,7 @@ class MarkAttendancePage extends StatefulWidget {
 
 class _MarkAttendancePageState extends State<MarkAttendancePage> {
   Widget attendance() {
-    return Padding(
-      padding: const EdgeInsets.only(
-        left: 15,
-        right: 15,
-      ),
-      child: Container(
-        width: double.infinity,
-        height: 616,
-        decoration: ShapeDecoration(
-          shape: RoundedRectangleBorder(
-            side: BorderSide(width: 1.50, color: Color(0xFF2C86C8)),
-            borderRadius: BorderRadius.circular(5),
-          ),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text(
-                'Roll no',
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w500,
-                  height: 0,
-                ),
-              ),
-              Text(
-                'Name',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              Text(
-                'Attendance',
-                textAlign: TextAlign.center,
-                style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 18,
-                  fontFamily: 'Inter',
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-            ],
-          ),
-        ),
-      ),
-    );
+    return Container();
   }
 
   @override
@@ -96,7 +42,61 @@ class _MarkAttendancePageState extends State<MarkAttendancePage> {
             SizedBox(
               height: 5,
             ),
-            attendance(),
+            Padding(
+              padding: const EdgeInsets.only(
+                left: 15,
+                right: 15,
+              ),
+              child: Container(
+                width: double.infinity,
+                height: 616,
+                decoration: ShapeDecoration(
+                  shape: RoundedRectangleBorder(
+                    side: BorderSide(width: 1.50, color: Color(0xFF2C86C8)),
+                    borderRadius: BorderRadius.circular(5),
+                  ),
+                ),
+                child: Padding(
+                  padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'Roll no',
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w500,
+                          height: 0,
+                        ),
+                      ),
+                      Text(
+                        'Name',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                      Text(
+                        'Attendance',
+                        textAlign: TextAlign.center,
+                        style: TextStyle(
+                          color: Colors.black,
+                          fontSize: 18,
+                          fontFamily: 'Inter',
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+            ),
             Text(widget.docid),
             Text(widget.classname),
             Expanded(
