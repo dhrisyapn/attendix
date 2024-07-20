@@ -3,6 +3,7 @@ import 'package:attendix/firebase_options.dart';
 import 'package:attendix/forgot.dart';
 import 'package:attendix/getstarted.dart';
 import 'package:attendix/login.dart';
+import 'package:attendix/profile.dart';
 import 'package:attendix/role.dart';
 import 'package:attendix/signup.dart';
 import 'package:attendix/studentlogin.dart';

@@ -11,6 +11,10 @@ class SudentProfilePage extends StatefulWidget {
 class _SudentProfilePageState extends State<SudentProfilePage> {
   @override
   Widget build(BuildContext context) {
-    return Scaffold();
+    return Scaffold(
+      body: Column(
+        children: [],
+      ),
+    );
   }
 }

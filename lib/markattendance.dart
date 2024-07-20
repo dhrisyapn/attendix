@@ -12,45 +12,126 @@ class MarkAttendancePage extends StatefulWidget {
 }
 
 class _MarkAttendancePageState extends State<MarkAttendancePage> {
+  Widget attendance() {
+    return Padding(
+      padding: const EdgeInsets.only(
+        left: 15,
+        right: 15,
+      ),
+      child: Container(
+        width: double.infinity,
+        height: 616,
+        decoration: ShapeDecoration(
+          shape: RoundedRectangleBorder(
+            side: BorderSide(width: 1.50, color: Color(0xFF2C86C8)),
+            borderRadius: BorderRadius.circular(5),
+          ),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.only(left: 10, right: 10, top: 10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Roll no',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w500,
+                  height: 0,
+                ),
+              ),
+              Text(
+                'Name',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              Text(
+                'Attendance',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontFamily: 'Inter',
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: Column(
-        children: [
-          Text(widget.docid),
-          Text(widget.classname),
-          Expanded(
-            child: FutureBuilder<QuerySnapshot>(
-              future: FirebaseFirestore.instance
-                  .collection('students')
-                  .doc(widget.classname)
-                  .collection('studentdata')
-                  .get(),
-              builder: (context, snapshot) {
-                if (snapshot.connectionState == ConnectionState.waiting) {
-                  return Center(child: CircularProgressIndicator());
-                }
-                if (snapshot.hasError) {
-                  return Text("Error: ${snapshot.error}");
-                }
-                if (!snapshot.hasData) {
-                  return Text("No data");
-                }
-                return ListView(
-                  children:
-                      snapshot.data!.docs.map((DocumentSnapshot document) {
-                    Map<String, dynamic> data =
-                        document.data()! as Map<String, dynamic>;
-                    return ListTile(
-                      title: Text(data['name']),
-                      subtitle: Text('Class Name: ${document.id}'),
-                    );
-                  }).toList(),
-                );
-              },
+      body: SafeArea(
+        child: Column(
+          children: [
+            Image.asset(
+              'assets/logo.png',
+              height: 30,
             ),
-          ),
-        ],
+            SizedBox(
+              height: 20,
+            ),
+            Text(
+              'Mark Attendance',
+              textAlign: TextAlign.center,
+              style: TextStyle(
+                color: Colors.black,
+                fontSize: 28,
+                fontFamily: 'Poppins',
+                fontWeight: FontWeight.w500,
+              ),
+            ),
+            SizedBox(
+              height: 5,
+            ),
+            attendance(),
+            Text(widget.docid),
+            Text(widget.classname),
+            Expanded(
+              child: FutureBuilder<QuerySnapshot>(
+                future: FirebaseFirestore.instance
+                    .collection('students')
+                    .doc(widget.classname)
+                    .collection('studentdata')
+                    .get(),
+                builder: (context, snapshot) {
+                  if (snapshot.connectionState == ConnectionState.waiting) {
+                    return Center(child: CircularProgressIndicator());
+                  }
+                  if (snapshot.hasError) {
+                    return Text("Error: ${snapshot.error}");
+                  }
+                  if (!snapshot.hasData) {
+                    return Text("No data");
+                  }
+                  return ListView(
+                    children:
+                        snapshot.data!.docs.map((DocumentSnapshot document) {
+                      Map<String, dynamic> data =
+                          document.data()! as Map<String, dynamic>;
+                      return ListTile(
+                        title: Text(data['name']),
+                        subtitle: Text('Class Name: ${document.id}'),
+                      );
+                    }).toList(),
+                  );
+                },
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }
