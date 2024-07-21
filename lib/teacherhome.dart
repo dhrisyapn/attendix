@@ -28,6 +28,7 @@ class _TeacherHomePageState extends State<TeacherHomePage> {
                     builder: (context) => MarkAttendancePage(
                           docid: docid,
                           classname: classname,
+                          subject: subject,
                         )));
           },
           child: Container(

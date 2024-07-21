@@ -5,7 +5,12 @@ import 'package:flutter/material.dart';
 class MarkAttendancePage extends StatefulWidget {
   String docid;
   String classname;
-  MarkAttendancePage({super.key, required this.docid, required this.classname});
+  String subject;
+  MarkAttendancePage(
+      {super.key,
+      required this.docid,
+      required this.classname,
+      required this.subject});
 
   @override
   State<MarkAttendancePage> createState() => _MarkAttendancePageState();
@@ -75,6 +80,22 @@ class _MarkAttendancePageState extends State<MarkAttendancePage> {
           )
           .collection('data')
           .doc(ispresent[i][0])
+          .set({'ispresent': ispresent[i][1]});
+
+      FirebaseFirestore.instance
+          .collection('userdata')
+          .doc(ispresent[i][2])
+          .collection('attendance')
+          .doc(
+            //today's date as dd-mm-yyyy
+            DateTime.now().day.toString() +
+                '-' +
+                DateTime.now().month.toString() +
+                '-' +
+                DateTime.now().year.toString(),
+          )
+          .collection('subjects')
+          .doc(widget.subject)
           .set({'ispresent': ispresent[i][1]});
     }
     Navigator.pop(context);
