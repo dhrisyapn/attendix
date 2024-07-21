@@ -197,37 +197,37 @@ class _MarkAttendancePageState extends State<MarkAttendancePage> {
                           },
                         ),
                       ),
-                      Padding(
-                        padding: const EdgeInsets.only(left: 30, right: 30),
-                        child: GestureDetector(
-                          onTap: () {
-                            markAttendance();
-                          },
-                          child: Container(
-                            width: double.infinity,
-                            height: 45,
-                            decoration: ShapeDecoration(
-                              color: Color(0xFF2C86C8),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                            ),
-                            child: Center(
-                              child: Text(
-                                'Submit',
-                                textAlign: TextAlign.center,
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 25,
-                                  fontFamily: 'Poppins',
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ),
-                          ),
-                        ),
-                      ),
                     ],
+                  ),
+                ),
+              ),
+            ),
+            Padding(
+              padding: const EdgeInsets.only(left: 30, right: 30, top: 30),
+              child: GestureDetector(
+                onTap: () {
+                  markAttendance();
+                },
+                child: Container(
+                  width: double.infinity,
+                  height: 45,
+                  decoration: ShapeDecoration(
+                    color: Color(0xFF2C86C8),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                  ),
+                  child: Center(
+                    child: Text(
+                      'Submit',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 25,
+                        fontFamily: 'Poppins',
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
                   ),
                 ),
               ),
