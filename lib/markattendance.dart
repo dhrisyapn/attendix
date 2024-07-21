@@ -29,7 +29,6 @@ class _MarkAttendancePageState extends State<MarkAttendancePage> {
               fontSize: 15,
               fontFamily: 'Inter',
               fontWeight: FontWeight.w400,
-              height: 0,
             ),
           ),
           Text(
@@ -64,9 +63,21 @@ class _MarkAttendancePageState extends State<MarkAttendancePage> {
           .collection('students')
           .doc(widget.classname)
           .collection('studentdata')
+          .doc(ispresent[i][2])
+          .collection('attendance')
+          .doc(
+            //today's date as dd-mm-yyyy
+            DateTime.now().day.toString() +
+                '-' +
+                DateTime.now().month.toString() +
+                '-' +
+                DateTime.now().year.toString(),
+          )
+          .collection('data')
           .doc(ispresent[i][0])
-          .update({'attendance': ispresent[i][2].collection('attendance')});
+          .set({'ispresent': ispresent[i][1]});
     }
+    Navigator.pop(context);
   }
 
   @override
@@ -172,13 +183,48 @@ class _MarkAttendancePageState extends State<MarkAttendancePage> {
                               itemCount: documents.length,
                               itemBuilder: (context, index) {
                                 final doc = documents[index];
-                                List data = [doc['rollno'], true, doc.id];
+                                List data = [
+                                  doc['rollno'],
+                                  true,
+                                  doc.id,
+                                  widget.docid
+                                ];
                                 ispresent.add(data);
                                 return attendance(
                                     doc['name'], doc['rollno'], index);
                               },
                             );
                           },
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.only(left: 30, right: 30),
+                        child: GestureDetector(
+                          onTap: () {
+                            markAttendance();
+                          },
+                          child: Container(
+                            width: double.infinity,
+                            height: 45,
+                            decoration: ShapeDecoration(
+                              color: Color(0xFF2C86C8),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(8),
+                              ),
+                            ),
+                            child: Center(
+                              child: Text(
+                                'Submit',
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 25,
+                                  fontFamily: 'Poppins',
+                                  fontWeight: FontWeight.w600,
+                                ),
+                              ),
+                            ),
+                          ),
                         ),
                       ),
                     ],
