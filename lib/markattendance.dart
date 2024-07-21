@@ -65,7 +65,7 @@ class _MarkAttendancePageState extends State<MarkAttendancePage> {
           .doc(widget.classname)
           .collection('studentdata')
           .doc(ispresent[i][0])
-          .update({'attendance': ispresent[i][1]});
+          .update({'attendance': ispresent[i][2].collection('attendance')});
     }
   }
 
@@ -172,7 +172,7 @@ class _MarkAttendancePageState extends State<MarkAttendancePage> {
                               itemCount: documents.length,
                               itemBuilder: (context, index) {
                                 final doc = documents[index];
-                                List data = [doc['rollno'], true];
+                                List data = [doc['rollno'], true, doc.id];
                                 ispresent.add(data);
                                 return attendance(
                                     doc['name'], doc['rollno'], index);
