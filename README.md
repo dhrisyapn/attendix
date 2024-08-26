@@ -1,16 +1,18 @@
-# attendix
+# Attendix: A Comprehensive Attendance Management System
+# Overview
 
-A new Flutter project.
+Attendix is a robust attendance management system designed to streamline the process of tracking student attendance in educational institutions. The application caters to both teachers and students, providing a user-friendly interface for managing and accessing attendance information.
 
-## Getting Started
+# Key Features
 
-This project is a starting point for a Flutter application.
+# Teacher Dashboard:
 
-A few resources to get you started if this is your first Flutter project:
+- Timetable Management: Create and modify timetables for different classes and subjects.
+- Class Management: Add, edit, and delete classes and their respective students.
+- Student Management: View and update student information.
+- Attendance Marking: Mark student attendance based on date and subject.
+# Student Dashboard:
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+- Attendance History: View attendance records for each subject.
+- Attendance Percentage: Calculate and display the overall attendance percentage for each subject.
+- Profile Management: Access and update personal information.
